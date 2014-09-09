@@ -1,0 +1,13 @@
+#################
+## Eclipse
+#################
+
+.project
+.metadata/
+bin/
+.classpath
+.settings/
+*.pdf
+
+#Custom ignores
+ECSC/
