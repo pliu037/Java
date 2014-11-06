@@ -10,4 +10,4 @@ bin/
 *.pdf
 
 #Custom ignores
-ECSC/
+CloudSafe/
