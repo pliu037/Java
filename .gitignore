@@ -1,13 +1,11 @@
 #################
-## Eclipse
+## IntelliJ
 #################
 
-.project
-.metadata/
-bin/
-.classpath
-.settings/
+.idea/
+out/
 *.pdf
+*.iml
 
 #Custom ignores
 CloudSafe/
