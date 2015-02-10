@@ -62,13 +62,13 @@ public class ConnectedComponents {
 		}
 	}
 	
-	public static void rearrangeGraphByRank (Node[] graph) {
+	public static Node[] rearrangeGraphByRank (Node[] graph) {
 		int size = graph.length;
 		Node[] temp = new Node [size];
 		for (int i = 0; i < size; i ++) {
 			temp[graph[i].getRank()] = graph[i];
 		}
-		graph = temp;
+		return temp;
 	}
 	
 	public static void addPathsToStack (int node, Node[] graph, ArrayList <Integer> stack) {
@@ -82,7 +82,6 @@ public class ConnectedComponents {
 	
 	public static void DepthFirstSearch (Node[] graph) {
 		int counter = graph.length - 1;
-		System.out.println(counter);
 		ArrayList <Integer> stack = new ArrayList <Integer>();
 		for (int i = 0; i < graph.length; i ++) {
 			if (!graph[i].isVisited()) {
@@ -111,7 +110,7 @@ public class ConnectedComponents {
 			graph[i].reverseEdges();
 			graph[i].setVisited(false);
 		}
-		rearrangeGraphByRank (graph);
+		graph = rearrangeGraphByRank (graph);
 		DepthFirstSearch(graph);
 		
 		double[] counts = new double [graph.length];
