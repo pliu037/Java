@@ -8,7 +8,6 @@ public class BinaryCode {
      */
     private String decode (String encoded, boolean first) {
 
-        //Initialized the decoded char[], setting the first char as either '1' or '0' based on first
         char[] decoded = new char[encoded.length()];
         if (first) {
             decoded[0] = '1';
