@@ -26,6 +26,6 @@ public class RectangularGrid {
 
     public static void main (String[] args) {
         RectangularGrid test = new RectangularGrid();
-        System.out.println(test.countRectangles(5, 2));
+        System.out.println(test.countRectangles(592, 964));
     }
 }
