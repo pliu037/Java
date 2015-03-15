@@ -1,0 +1,11 @@
+Problem #1
+2 rectangle(s) of area 1
+0 rectangle(s) of area 2
+0 rectangle(s) of area 3
+1 rectangle(s) of area 4
+**********************************
+
+Problem #2
+No completed rectangles can be found.
+**********************************
+
