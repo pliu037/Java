@@ -12,9 +12,9 @@ public class ExerciseMachine {
         seconds += Integer.parseInt(parsed[1])*60;
         seconds += Integer.parseInt(parsed[2]);
         int count = 0;
-        for (int i = 1; i < seconds; i ++) {
-            if (100*i % seconds == 0) {
-                count += 1;
+        for (int i = 1; i < 100; i ++) {
+            if (i*seconds % 100 == 0) {
+                count ++;
             }
         }
         return count;

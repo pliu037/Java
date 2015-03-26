@@ -30,8 +30,15 @@ public class Q5 {
             for (int i = 0; i < paths.size(); i ++) {
                 if (paths.get(i) == previous) {
                     i ++;
-                    while (ryanMarked.get(i%paths.size())) {
-                        i ++;
+                    if (minotaurVisited) {
+                        while (!minotaurMarked.get(i%paths.size())) {
+                            i ++;
+                        }
+                    }
+                    else {
+                        while (ryanMarked.get(i % paths.size())) {
+                            i ++;
+                        }
                     }
                     ryanMarked.set(i%paths.size(), true);
                     return paths.get(i%paths.size());
@@ -48,6 +55,7 @@ public class Q5 {
                         i += paths.size();
                     }
                     while (minotaurMarked.get(i%paths.size())) {
+                        System.out.println("M was here");
                         i --;
                         if (i < 0) {
                             i += paths.size();
@@ -111,6 +119,7 @@ public class Q5 {
 
         Cavern ryansLocation = ryan.nextLocation;
         Cavern minotaursLocation = minotaur.nextLocation;
+        //System.out.println(ryansLocation.name + " " + minotaursLocation.name);
 
         minotaursLocation.minotaurVisited = true;
         if (ryansLocation.minotaurVisited) {
@@ -129,7 +138,6 @@ public class Q5 {
     private static void runSimulation(Hashtable<String, Cavern> map, String start, PrintWriter output) {
         Character ryan = new Character(map.get(start.substring(1, 2)), map.get(start.substring(2, 3)));
         Character minotaur = new Character(map.get(start.substring(3, 4)), map.get(start.substring(4, 5)));
-
 
         while (true) {
             if (inTransit(ryan, minotaur)) {
