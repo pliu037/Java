@@ -5,7 +5,8 @@ import DataStructs.HashTable;
 public class EncodingTree<E> extends StaticTree<E> implements Encoder<E>{
 	
 	private final HashTable<E, StaticNode<E>> alphabet;
-	
+    private final HashTable<E, ArrayList<Integer>> cache = new HashTable<>();
+
 	private static final String ROOT_WITH_SYMBOL = "Root node cannot contain a symbol!";
 	private static final String LEAVES_WITH_CHILDREN = "Leaves cannot have children!";
 	protected static final String ALPHABET_TOO_SMALL = "Alphabet size must be at least 1!";
@@ -130,12 +131,15 @@ public class EncodingTree<E> extends StaticTree<E> implements Encoder<E>{
 		}
 		ArrayList<Integer> output = new ArrayList<>();
 		for (int i = 0; i < stream.size(); i ++) {
-			StaticNode<E> base = alphabet.peek(stream.get(i));
-			if (base == null) {
-				System.out.println(SYMBOL_NOT_FOUND(stream.get(i)));
-				return null;
-			}
-			output.addAll(encodeSymbol(base));
+            if (cache.peek(stream.get(i)) == null) {
+                StaticNode<E> base = alphabet.peek(stream.get(i));
+                if (base == null) {
+                    System.out.println(SYMBOL_NOT_FOUND(stream.get(i)));
+                    return null;
+                }
+                cache.add(stream.get(i), encodeSymbol(base));
+            }
+			output.addAll(cache.peek(stream.get(i)));
 		}
 		return output;
 	}
