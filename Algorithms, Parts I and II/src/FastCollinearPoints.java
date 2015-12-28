@@ -61,7 +61,7 @@ public class FastCollinearPoints {
     }
 
     public static void main(String[] args) {
-        In in = new In("D:\\Work\\Programming\\Java\\Algorithms, Parts I and II\\collinear\\test1.txt");
+        In in = new In(".\\Algorithms, Parts I and II\\collinear\\test1.txt");
         int n = in.readInt();
         Point[] points = new Point[n];
         for (int i = 0; i < n; i ++) {

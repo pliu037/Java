@@ -35,7 +35,7 @@ public class Outcast {
     }
 
     public static void main(String[] args) { // see test client below
-        WordNet wordnet = new WordNet("D:\\Work\\Programming\\Java\\Algorithms, Parts I and II\\wordNet\\synsets.txt", "D:\\Work\\Programming\\Java\\Algorithms, Parts I and II\\wordNet\\hypernyms.txt");
+        WordNet wordnet = new WordNet(".\\Algorithms, Parts I and II\\wordNet\\synsets.txt", ".\\Algorithms, Parts I and II\\wordNet\\hypernyms.txt");
         Outcast outcast = new Outcast(wordnet);
         String[] nouns = new String[]{"zebra", "cat", "bear", "table"};
         StdOut.println("Outcast: " + outcast.outcast(nouns));

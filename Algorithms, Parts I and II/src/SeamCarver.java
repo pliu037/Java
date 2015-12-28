@@ -151,11 +151,11 @@ public class SeamCarver {
     }
 
     public void save() {
-        pic.save("D:\\Work\\Programming\\Java\\Algorithms, Parts I and II\\seamCarving\\out.jpg");
+        pic.save(".\\Algorithms, Parts I and II\\seamCarving\\out.jpg");
     }
 
     public static void main(String[] args) {
-        SeamCarver test = new SeamCarver(new Picture ("D:\\Work\\Programming\\Java\\Algorithms, Parts I and II\\seamCarving\\ZhGEqAP.jpg"));
+        SeamCarver test = new SeamCarver(new Picture (".\\Algorithms, Parts I and II\\seamCarving\\ZhGEqAP.jpg"));
         for (int num = 0; num < 1000; num ++) {
             int[] seam = test.findVerticalSeam();
             for (int i = 0; i < seam.length; i++) {

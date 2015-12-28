@@ -64,7 +64,7 @@ public class WordNet {
 
     // do unit testing of this class
     public static void main(String[] args) {
-        WordNet test = new WordNet("D:\\Work\\Programming\\Java\\Algorithms, Parts I and II\\wordNet\\synsets.txt", "D:\\Work\\Programming\\Java\\Algorithms, Parts I and II\\wordNet\\hypernyms.txt");
+        WordNet test = new WordNet(".\\Algorithms, Parts I and II\\wordNet\\synsets.txt", ".\\Algorithms, Parts I and II\\wordNet\\hypernyms.txt");
         System.out.println(test.distance("hoot", "honey"));
         System.out.println(test.sap("hoot", "honey"));
     }
