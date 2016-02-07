@@ -140,9 +140,17 @@ public class Board {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (int pos = 0; pos < blocks.length; pos ++) {
-            sb.append(blocks[pos]);
+            sb.append(blocks[pos] + " ");
         }
         return sb.toString();
+    }
+
+    public int hashCode() {
+        int ret = 0;
+        for (int pos = 0; pos < blocks.length; pos ++) {
+            ret += (pos + 1)*blocks[pos];
+        }
+        return ret;
     }
 
     public static void main (String[] args) {

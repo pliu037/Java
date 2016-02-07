@@ -69,7 +69,7 @@ public class Dragons {
 
     /**
      * Returns the amount of food Snaug (index 2) has after <rounds> rounds as a single integer, if
-     * it is while, or as a reduced fraction, x/y, otherwise.
+     * it is, or as a reduced fraction, x/y, otherwise.
      */
     public String snaug(int[] initialFood, int rounds) {
         numerator = new long[initialFood.length];

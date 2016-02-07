@@ -110,6 +110,9 @@ public class Deque<T> implements Iterable<T> {
     }
 
     public T removeFirst() {
+        if (size == 0) {
+            return null;
+        }
         T ret = head.getItem();
         head = head.getPrev();
         if (head != null) {
@@ -123,6 +126,9 @@ public class Deque<T> implements Iterable<T> {
     }
 
     public T removeLast() {
+        if (size == 0) {
+            return null;
+        }
         T ret = tail.getItem();
         tail = tail.getNext();
         if (tail != null) {
@@ -133,6 +139,20 @@ public class Deque<T> implements Iterable<T> {
         }
         size --;
         return ret;
+    }
+
+    public T peekFirst() {
+        if (size == 0) {
+            return null;
+        }
+        return head.getItem();
+    }
+
+    public T peekLast() {
+        if (size == 0) {
+            return null;
+        }
+        return tail.getItem();
     }
 
     public Iterator<T> iterator() {
