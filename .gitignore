@@ -4,9 +4,4 @@
 
 .idea/
 out/
-*.pdf
 *.iml
-
-#Custom ignores
-CloudSafe/
-Plugins/

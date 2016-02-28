@@ -1,6 +1,9 @@
+import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 /**
@@ -167,13 +170,17 @@ public class KdTree {
     }
 
     public Point2D nearest(Point2D p) {
-        if (isEmpty()) {
-            return null;
-        }
-        int dim = 0;
         double[] vector = new double[]{p.x(), p.y()};
+        return closestSubtree(p, vector, root, null, 0);
+    }
+
+    private Point2D closestSubtree(Point2D p, double[] vector, KdNode<Point2D> root, Point2D tentativeClosest, int level) {
+        if (root == null) {
+            return tentativeClosest;
+        }
         Deque<KdNode<Point2D>> path = new Deque<>();
         KdNode<Point2D> current = root;
+        int dim = level % dimensions;
         while (current != null) {
             path.addLast(current);
             if (vector[dim] < current.value) {
@@ -184,47 +191,31 @@ public class KdTree {
             }
             dim = (dim + 1)%dimensions;
         }
-        Point2D closestPoint = path.peekLast().data;
-        double closestSqDistance = closestPoint.distanceSquaredTo(p);
+
+        double closestSqDistance = tentativeClosest == null ? Double.POSITIVE_INFINITY : tentativeClosest.distanceSquaredTo(p);
         while (!path.isEmpty()) {
             KdNode<Point2D> check = path.removeLast();
-            //Whether to check a given subtree (make sure only the non-traversed one is checked)
-            if (Math.pow(vector[path.size()%dimensions] - check.value, 2) < closestSqDistance) {
-                if (vector[path.size()%dimensions] < check.value) {
+            if (Math.pow(vector[(path.size() + level)%dimensions] - check.value, 2) < closestSqDistance) {
+                if (check.data.distanceSquaredTo(p) < closestSqDistance) {
+                    tentativeClosest = check.data;
+                    closestSqDistance = check.data.distanceSquaredTo(p);
+                }
+                if (vector[(path.size() + level)%dimensions] < check.value) {
                     check = check.right;
                 }
                 else {
                     check = check.left;
                 }
-                Point2D newClosest = closestSubtree(path.size() + 1, check, p, closestSqDistance);
-                if (newClosest != null) {
-                    closestPoint = newClosest;
-                    closestSqDistance = closestPoint.distanceSquaredTo(p);
-                }
+                tentativeClosest = closestSubtree(p, vector, check, tentativeClosest, path.size() + level + 1);
             }
         }
-        return closestPoint;
-    }
-
-    private Point2D closestSubtree(int dim, KdNode<Point2D> subtreeRoot, Point2D p, double closestSqDistance) {
-        double[] vector = new double[]{p.x(), p.y()};
-        Point2D newClosest = null;
-        Deque<KdNode<Point2D>> currentLevel = new Deque<>(), nextLevel;
-        currentLevel.addLast(subtreeRoot);
-        while (!currentLevel.isEmpty()) {
-            nextLevel = new Deque<>();
-            while (!currentLevel.isEmpty()) {
-                KdNode<Point2D> check = currentLevel.removeFirst();
-            }
-            currentLevel = nextLevel;
-            dim ++;
-        }
-        return newClosest;
+        return tentativeClosest;
     }
 
     public static void main (String[] args) {
         KdTree test = new KdTree(2);
-        RectHV rect = new RectHV(1, 1, 5, 5);
+        PointSet test2 = new PointSet();
+        /*RectHV rect = new RectHV(1, 1, 5, 5);
         test.insert(new Point2D(1, 1));
         test.insert(new Point2D(1, 0));
         test.insert(new Point2D(6, 2));
@@ -237,10 +228,25 @@ public class KdTree {
         System.out.println(test.size());
         System.out.println(test.contains(new Point2D(6, 5)));
         System.out.println(test.contains(new Point2D(6, 4)));
-        //test.printTree();
+        test.printTree();
         Iterable<Point2D> results = test.range(rect);
         System.out.println(results);
-        System.out.println(test.nearest(new Point2D(0, 0.75)));
+        System.out.println(test.nearest(new Point2D(3.5, 3.4)));*/
+        In in = new In("D:\\Work\\Programming\\Java\\Algorithms, Parts I and II\\input1M.txt");
+        for (int i = 0; i < 1000000; i ++) {
+            double x = in.readDouble();
+            double y = in.readDouble();
+            Point2D cur = new Point2D(x, y);
+            test.insert(cur);
+            test2.insert(cur);
+        }
+        System.out.println("Data Loaded: " + test.size() + " points");
+        System.out.println(test.nearest(new Point2D(0.21, 0.75)));
+        System.out.println(test.nearest(new Point2D(0.65, 0.23)));
+        System.out.println(test.nearest(new Point2D(0.89, 0.46)));
+        System.out.println(test2.nearest(new Point2D(0.21, 0.75)));
+        System.out.println(test2.nearest(new Point2D(0.65, 0.23)));
+        System.out.println(test2.nearest(new Point2D(0.89, 0.46)));
     }
 
 }

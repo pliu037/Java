@@ -127,7 +127,7 @@ public class Solver {
         //Board testB = new Board(new int[][]{{0, 1, 3}, {4, 2, 5}, {7, 8, 6}});
         Board testB = new Board(new int[][]{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}, {13, 15, 14, 0}});
         BoardNode testBN = new BoardNode(testB, null, 0);
-        Solver test = new Solver(testBN, new BoardNode.HammingCmp());
+        Solver test = new Solver(testBN, new BoardNode.ManhattanCmp());
         System.out.println("Solveable: " + test.isSolvable() + " in " + test.moves() + " moves");
         Iterable<Board> solution = test.solution();
         for (Board move : solution) {
