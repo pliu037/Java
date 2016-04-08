@@ -32,7 +32,7 @@ public class PopularityLeague extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {
         // TODO
-	Configuration conf = this.getConf();
+        Configuration conf = this.getConf();
 
         Job job = Job.getInstance(conf, "Popularity League");
         job.setOutputKeyClass(IntWritable.class);
@@ -54,7 +54,7 @@ public class PopularityLeague extends Configured implements Tool {
         HashSet<Integer> league = new HashSet<>();
 
         @Override
-        protected void setup(Context context) throws IOException,InterruptedException {
+        protected void setup(Context context) throws IOException, InterruptedException {
             Configuration conf = context.getConfiguration();
             String path = conf.get("league");
 
@@ -84,7 +84,7 @@ public class PopularityLeague extends Configured implements Tool {
     }
 
     public static class LinkCountReduce extends Reducer<IntWritable, IntWritable, IntWritable, IntWritable> {
-	ArrayList<Pair<Integer, Integer>> list = new ArrayList<>();
+        ArrayList<Pair<Integer, Integer>> list = new ArrayList<>();
 
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
@@ -97,11 +97,11 @@ public class PopularityLeague extends Configured implements Tool {
 
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
-	    for (Pair<Integer, Integer> pair : list) {
+            for (Pair<Integer, Integer> pair : list) {
                 int count = 0;
                 for (Pair<Integer, Integer> pair2 : list) {
                     if (pair.compareTo(pair2) > 0) {
-                        count ++;
+                        count++;
                     }
                 }
                 context.write(new IntWritable(pair.first), new IntWritable(count));
@@ -124,15 +124,15 @@ public class PopularityLeague extends Configured implements Tool {
         }
     }
 
-    public static String readHDFSFile(String path, Configuration conf) throws IOException{
-        Path pt=new Path(path);
+    public static String readHDFSFile(String path, Configuration conf) throws IOException {
+        Path pt = new Path(path);
         FileSystem fs = FileSystem.get(pt.toUri(), conf);
         FSDataInputStream file = fs.open(pt);
-        BufferedReader buffIn=new BufferedReader(new InputStreamReader(file));
+        BufferedReader buffIn = new BufferedReader(new InputStreamReader(file));
 
         StringBuilder everything = new StringBuilder();
         String line;
-        while( (line = buffIn.readLine()) != null) {
+        while ((line = buffIn.readLine()) != null) {
             everything.append(line);
             everything.append("\n");
         }

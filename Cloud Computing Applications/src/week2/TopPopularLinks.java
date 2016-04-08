@@ -51,7 +51,7 @@ public class TopPopularLinks extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {
         // TODO
-	Configuration conf = this.getConf();
+        Configuration conf = this.getConf();
         FileSystem fs = FileSystem.get(conf);
         Path tmpPath = new Path("/w1/tmp");
         fs.delete(tmpPath, true);
@@ -84,7 +84,7 @@ public class TopPopularLinks extends Configured implements Tool {
         FileInputFormat.setInputPaths(jobB, tmpPath);
         FileOutputFormat.setOutputPath(jobB, new Path(args[1]));
 
-	jobB.setInputFormatClass(KeyValueTextInputFormat.class);
+        jobB.setInputFormatClass(KeyValueTextInputFormat.class);
         jobB.setOutputFormatClass(TextOutputFormat.class);
 
         jobB.setJarByClass(TopPopularLinks.class);
@@ -93,7 +93,7 @@ public class TopPopularLinks extends Configured implements Tool {
 
     public static class LinkCountMap extends Mapper<Object, Text, IntWritable, IntWritable> {
         // TODO
-	@Override
+        @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String line = value.toString();
             StringTokenizer st = new StringTokenizer(line, ":");
@@ -110,7 +110,7 @@ public class TopPopularLinks extends Configured implements Tool {
 
     public static class LinkCountReduce extends Reducer<IntWritable, IntWritable, IntWritable, IntWritable> {
         // TODO
-	@Override
+        @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             int sum = 0;
             for (IntWritable value : values) {
@@ -122,15 +122,16 @@ public class TopPopularLinks extends Configured implements Tool {
 
     public static class TopLinksMap extends Mapper<Text, Text, NullWritable, IntArrayWritable> {
         Integer N;
-	TreeSet<Pair<Integer, Integer>> topPages = new TreeSet<>();
+        TreeSet<Pair<Integer, Integer>> topPages = new TreeSet<>();
 
         @Override
-        protected void setup(Context context) throws IOException,InterruptedException {
+        protected void setup(Context context) throws IOException, InterruptedException {
             Configuration conf = context.getConfiguration();
             this.N = conf.getInt("N", 10);
         }
+
         // TODO
-	@Override
+        @Override
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
             Integer node = Integer.parseInt(key.toString());
             Integer count = Integer.parseInt(value.toString());
@@ -152,15 +153,16 @@ public class TopPopularLinks extends Configured implements Tool {
 
     public static class TopLinksReduce extends Reducer<NullWritable, IntArrayWritable, IntWritable, IntWritable> {
         Integer N;
-	TreeSet<Pair<Integer, Integer>> topPages = new TreeSet<>();
+        TreeSet<Pair<Integer, Integer>> topPages = new TreeSet<>();
 
         @Override
-        protected void setup(Context context) throws IOException,InterruptedException {
+        protected void setup(Context context) throws IOException, InterruptedException {
             Configuration conf = context.getConfiguration();
             this.N = conf.getInt("N", 10);
         }
+
         // TODO
-	@Override
+        @Override
         public void reduce(NullWritable key, Iterable<IntArrayWritable> values, Context context) throws IOException, InterruptedException {
             for (IntArrayWritable val : values) {
                 IntWritable[] list = (IntWritable[]) val.toArray();

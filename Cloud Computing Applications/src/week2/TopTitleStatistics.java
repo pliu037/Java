@@ -76,15 +76,15 @@ public class TopTitleStatistics extends Configured implements Tool {
         return jobB.waitForCompletion(true) ? 0 : 1;
     }
 
-    public static String readHDFSFile(String path, Configuration conf) throws IOException{
-        Path pt=new Path(path);
+    public static String readHDFSFile(String path, Configuration conf) throws IOException {
+        Path pt = new Path(path);
         FileSystem fs = FileSystem.get(pt.toUri(), conf);
         FSDataInputStream file = fs.open(pt);
-        BufferedReader buffIn=new BufferedReader(new InputStreamReader(file));
+        BufferedReader buffIn = new BufferedReader(new InputStreamReader(file));
 
         StringBuilder everything = new StringBuilder();
         String line;
-        while( (line = buffIn.readLine()) != null) {
+        while ((line = buffIn.readLine()) != null) {
             everything.append(line);
             everything.append("\n");
         }
@@ -112,7 +112,7 @@ public class TopTitleStatistics extends Configured implements Tool {
         String delimiters;
 
         @Override
-        protected void setup(Context context) throws IOException,InterruptedException {
+        protected void setup(Context context) throws IOException, InterruptedException {
 
             Configuration conf = context.getConfiguration();
 
@@ -127,7 +127,7 @@ public class TopTitleStatistics extends Configured implements Tool {
         @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             // TODO
-	    String line = value.toString();
+            String line = value.toString();
             StringTokenizer st = new StringTokenizer(line, this.delimiters);
             while (st.hasMoreTokens()) {
                 String token = st.nextToken();
@@ -142,8 +142,8 @@ public class TopTitleStatistics extends Configured implements Tool {
         @Override
         public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             // TODO
-	    int sum = 0;
-            for (IntWritable val: values) {
+            int sum = 0;
+            for (IntWritable val : values) {
                 sum += val.get();
             }
             context.write(key, new IntWritable(sum));
@@ -153,10 +153,10 @@ public class TopTitleStatistics extends Configured implements Tool {
     public static class TopTitlesStatMap extends Mapper<Text, Text, NullWritable, TextArrayWritable> {
         Integer N;
         // TODO
-	TreeSet<Pair<Integer, String>> topWords = new TreeSet<>();
+        TreeSet<Pair<Integer, String>> topWords = new TreeSet<>();
 
         @Override
-        protected void setup(Context context) throws IOException,InterruptedException {
+        protected void setup(Context context) throws IOException, InterruptedException {
             Configuration conf = context.getConfiguration();
             this.N = conf.getInt("N", 10);
         }
@@ -164,7 +164,7 @@ public class TopTitleStatistics extends Configured implements Tool {
         @Override
         public void map(Text key, Text value, Context context) throws IOException, InterruptedException {
             // TODO
-	    Integer count = Integer.parseInt(value.toString());
+            Integer count = Integer.parseInt(value.toString());
             String word = key.toString();
 
             topWords.add(new Pair<Integer, String>(count, word));
@@ -177,7 +177,7 @@ public class TopTitleStatistics extends Configured implements Tool {
         @Override
         protected void cleanup(Context context) throws IOException, InterruptedException {
             // TODO
-	    for (Pair<Integer, String> item : topWords) {
+            for (Pair<Integer, String> item : topWords) {
                 String[] strings = {item.second, item.first.toString()};
                 TextArrayWritable val = new TextArrayWritable(strings);
                 context.write(NullWritable.get(), val);
@@ -188,10 +188,10 @@ public class TopTitleStatistics extends Configured implements Tool {
     public static class TopTitlesStatReduce extends Reducer<NullWritable, TextArrayWritable, Text, IntWritable> {
         Integer N;
         // TODO
-	TreeSet<Pair<Integer, String>> topWords = new TreeSet<>();
+        TreeSet<Pair<Integer, String>> topWords = new TreeSet<>();
 
         @Override
-        protected void setup(Context context) throws IOException,InterruptedException {
+        protected void setup(Context context) throws IOException, InterruptedException {
             Configuration conf = context.getConfiguration();
             this.N = conf.getInt("N", 10);
         }
@@ -201,7 +201,7 @@ public class TopTitleStatistics extends Configured implements Tool {
             Integer sum = 0, mean, max, min, var;
 
             // TODO
-	    for (TextArrayWritable val: values) {
+            for (TextArrayWritable val : values) {
                 Text[] texts = (Text[]) val.toArray();
                 String word = texts[0].toString();
                 Integer count = Integer.parseInt(texts[1].toString());
@@ -220,15 +220,15 @@ public class TopTitleStatistics extends Configured implements Tool {
                 sum += pair.first;
             }
 
-            mean = sum/N;
+            mean = sum / N;
 
             double temp_var = 0;
 
             for (Pair<Integer, String> pair : topWords) {
-                temp_var += (pair.first - mean)*(pair.first - mean);
+                temp_var += (pair.first - mean) * (pair.first - mean);
             }
 
-            var = (int)(temp_var/N);
+            var = (int) (temp_var / N);
 
             context.write(new Text("Mean"), new IntWritable(mean));
             context.write(new Text("Sum"), new IntWritable(sum));

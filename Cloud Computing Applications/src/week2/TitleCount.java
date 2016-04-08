@@ -48,15 +48,15 @@ public class TitleCount extends Configured implements Tool {
         return job.waitForCompletion(true) ? 0 : 1;
     }
 
-    public static String readHDFSFile(String path, Configuration conf) throws IOException{
-        Path pt=new Path(path);
+    public static String readHDFSFile(String path, Configuration conf) throws IOException {
+        Path pt = new Path(path);
         FileSystem fs = FileSystem.get(pt.toUri(), conf);
         FSDataInputStream file = fs.open(pt);
-        BufferedReader buffIn=new BufferedReader(new InputStreamReader(file));
+        BufferedReader buffIn = new BufferedReader(new InputStreamReader(file));
 
         StringBuilder everything = new StringBuilder();
         String line;
-        while( (line = buffIn.readLine()) != null) {
+        while ((line = buffIn.readLine()) != null) {
             everything.append(line);
             everything.append("\n");
         }
@@ -70,7 +70,7 @@ public class TitleCount extends Configured implements Tool {
         String delimiters;
 
         @Override
-        protected void setup(Context context) throws IOException,InterruptedException {
+        protected void setup(Context context) throws IOException, InterruptedException {
 
             Configuration conf = context.getConfiguration();
 
@@ -100,8 +100,8 @@ public class TitleCount extends Configured implements Tool {
         @Override
         public void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             // TODO
-	    int sum = 0;
-            for (IntWritable val: values) {
+            int sum = 0;
+            for (IntWritable val : values) {
                 sum += val.get();
             }
             context.write(key, new IntWritable(sum));

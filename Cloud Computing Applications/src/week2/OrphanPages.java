@@ -27,7 +27,7 @@ public class OrphanPages extends Configured implements Tool {
     @Override
     public int run(String[] args) throws Exception {
         //TODO
-	    Job job = Job.getInstance(this.getConf(), "Orphan Pages");
+        Job job = Job.getInstance(this.getConf(), "Orphan Pages");
         job.setOutputKeyClass(IntWritable.class);
         job.setOutputValueClass(NullWritable.class);
 
@@ -48,7 +48,7 @@ public class OrphanPages extends Configured implements Tool {
         @Override
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             //TODO
-	    String line = value.toString();
+            String line = value.toString();
             StringTokenizer st = new StringTokenizer(line, ":");
             Integer src = Integer.parseInt(st.nextToken());
             context.write(new IntWritable(src), new IntWritable(0));
@@ -65,7 +65,7 @@ public class OrphanPages extends Configured implements Tool {
         @Override
         public void reduce(IntWritable key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
             //TODO
-	    int sum = 0;
+            int sum = 0;
             for (IntWritable value : values) {
                 sum += value.get();
             }
