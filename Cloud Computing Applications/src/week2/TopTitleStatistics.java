@@ -47,6 +47,7 @@ public class TopTitleStatistics extends Configured implements Tool {
         jobA.setOutputValueClass(IntWritable.class);
 
         jobA.setMapperClass(TitleCountMap.class);
+        jobA.setCombinerClass(TitleCountReduce.class);
         jobA.setReducerClass(TitleCountReduce.class);
 
         FileInputFormat.setInputPaths(jobA, new Path(args[0]));
