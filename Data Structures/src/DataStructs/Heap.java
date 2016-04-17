@@ -280,18 +280,16 @@ public final class Heap <E extends Comparable<E>> {
 	
 	public static void main (String[] args) {
 		ArrayList<Integer> list = new ArrayList<>();
-		list.add(1);
-		list.add(2);
-		list.add(3);
-		list.add(4);
-		list.add(2);
+		for (int i = 0; i < 50000; i ++) {
+			list.add(i);
+		}
 		Heap <Integer> test = Heap.getHeap(true,list);
 		test.add(3);
 		test.add(3);
 		test.add(3);
 		test.add(3);
+        System.out.println(test.getPositions(3));
 		test.removeAll(3);
-		//test.removeAll(2);
 		System.out.println(test.getPositions(3));
 		System.out.println(test.getSize() + " " + test.getHeap());
 
