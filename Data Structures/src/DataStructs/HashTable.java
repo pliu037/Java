@@ -133,7 +133,7 @@ public final class HashTable <S,T> {
 		return true;
 	}
 	
-	public T peek (S name) {
+	public T get(S name) {
 		if (name == null) {
 			System.out.println(NULL_INPUT);
 			return null;
@@ -243,10 +243,10 @@ public final class HashTable <S,T> {
 		System.out.println(ht.getNumBins() + " " + ht.getSize());
 		ht.add (4, true);
 		ht.replace (3, true);
-		System.out.println(ht.getNumBins() + " " + ht.getSize() + " " + ht.peek(3));
+		System.out.println(ht.getNumBins() + " " + ht.getSize() + " " + ht.get(3));
 		ht.remove(4);
 		ht.remove(3);
-		System.out.println(ht.getNumBins() + " " + ht.getSize() + " " + ht.peek(3));
+		System.out.println(ht.getNumBins() + " " + ht.getSize() + " " + ht.get(3));
 	}
 
 }

@@ -77,14 +77,14 @@ public final class Heap <E extends Comparable<E>> {
 	}
 	
 	private void hashTableManagement (E item, int pos) {
-		HashTable<Integer, Boolean> temp = ht.peek(item);
+		HashTable<Integer, Boolean> temp = ht.get(item);
 		if (temp == null) {
 			temp = new HashTable<>();
 			temp.add(pos, true);
 			ht.add(item, temp);
 		}
 		else {
-			if (temp.peek(pos) != null) {
+			if (temp.get(pos) != null) {
 				temp.remove(pos);
 				if (temp.isEmpty()) {
 					ht.remove(item);
@@ -234,11 +234,11 @@ public final class Heap <E extends Comparable<E>> {
 			System.out.println(NULL_INPUT);
 			return null;
 		}
-		HashTable<Integer, Boolean> check = ht.peek(target);
+		HashTable<Integer, Boolean> check = ht.get(target);
 		if (check == null) {
 			return new ArrayList<Integer>();
 		}
-		return ht.peek(target).getNames();
+		return ht.get(target).getNames();
 	}
 	
 	public E remove () {
@@ -264,7 +264,7 @@ public final class Heap <E extends Comparable<E>> {
 	}
 	
 	public boolean removeAll (E target) {
-		HashTable<Integer, Boolean> targets = ht.peek(target);
+		HashTable<Integer, Boolean> targets = ht.get(target);
 		if (targets == null) {
 			return false;
 		}

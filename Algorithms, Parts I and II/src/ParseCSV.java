@@ -1,11 +1,11 @@
-import DataStructs.HashTable;
 import edu.princeton.cs.algs4.In;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class ParseCSV {
 
-    private HashTable<String, String[]> index = null;
+    private HashMap<String, String[]> index = null;
     private String filename = null;
     private int key_column = -1, num_fields = -1;
 
@@ -20,7 +20,7 @@ public class ParseCSV {
             return false;
         }
 
-        index = new HashTable<>();
+        index = new HashMap<>();
         In in = new In (filename);
 
         //The assumption is the number of fields in the first entry is the correct number of fields
@@ -32,7 +32,7 @@ public class ParseCSV {
                 return false;
             }
             num_fields = strings.length;
-            index.add(strings[key_column], strings);
+            index.put(strings[key_column], strings);
         }
         while (!in.isEmpty()) {
             String buffer = in.readLine();
@@ -41,7 +41,7 @@ public class ParseCSV {
                 System.out.println ("\"" + buffer + "\" does not contain the correct number of fields and was discarded.");
             }
             else {
-                index.add(strings[key_column], strings);
+                index.put(strings[key_column], strings);
             }
         }
         return true;
@@ -68,7 +68,7 @@ public class ParseCSV {
                 return null;
             }
         }
-        return index.peek(query);
+        return index.get(query);
     }
 
     public String lookup (String filename, String query, int key_column, int value_column) {
