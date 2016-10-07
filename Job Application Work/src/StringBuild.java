@@ -1,10 +1,11 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class StringBuild {
 
-    static void recursiveParse(String str, ArrayList<String> words, ArrayList<String> stack) {
+    static void recursiveParse(String str, List<String> words, List<String> stack) {
         if (str.length() == 0) {
             return;
         }
@@ -25,7 +26,7 @@ public class StringBuild {
         stack.add(null);
     }
 
-    static String buildString(ArrayList<String> words, String separator) {
+    static String buildString(List<String> words, String separator) {
         StringBuilder sb = new StringBuilder();
         for (String word : words) {
             sb.append(word);
