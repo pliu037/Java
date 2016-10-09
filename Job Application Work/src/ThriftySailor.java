@@ -12,15 +12,18 @@ public class ThriftySailor {
             HashMap<Integer, Integer> newKeys = new HashMap<>();
             for (Integer key : minDrinksPerAmt.keySet()) {
                 Integer sum = drink + key;
-                Integer currentMin = Math.min(minDrinksPerAmt.containsKey(sum) ? minDrinksPerAmt.get(sum) : Integer.MAX_VALUE, minDrinksPerAmt.get(key) + 1);
-                newKeys.put(sum, newKeys.containsKey(sum) ? Math.min(currentMin, newKeys.get(sum)) : currentMin);
+                if (sum <= max) {
+                    Integer currentMin = Math.min(minDrinksPerAmt.containsKey(sum) ? minDrinksPerAmt.get(sum) : Integer.MAX_VALUE, minDrinksPerAmt.get(key) + 1);
+                    newKeys.put(sum, newKeys.containsKey(sum) ? Math.min(currentMin, newKeys.get(sum)) : currentMin);
+                }
             }
+
             for (Map.Entry<Integer, Integer> entry : newKeys.entrySet()) {
                 minDrinksPerAmt.put(entry.getKey(), entry.getValue());
             }
         }
 
-        Integer lowest = Integer.MAX_VALUE;
+        int lowest = Integer.MAX_VALUE;
         for (Integer i = min; i <= max; i ++) {
             if (minDrinksPerAmt.containsKey(i) && minDrinksPerAmt.get(i) < lowest) {
                 lowest = minDrinksPerAmt.get(i);

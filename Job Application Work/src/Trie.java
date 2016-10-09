@@ -11,10 +11,12 @@ public class Trie {
                 return false;
             }
         }
+
         int index = str.charAt(0);
         if (children[index] == null) {
             return false;
         }
+
         return children[index].contains(str.substring(1));
     }
 
