@@ -1,6 +1,3 @@
-/**
- * Created by pengl on 2015-11-19.
- */
 public class BaseballElimination {
 
     public BaseballElimination(String filename) {       // create a baseball division from given filename in format specified below

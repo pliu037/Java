@@ -3,9 +3,6 @@ import edu.princeton.cs.algs4.In;
 
 import java.util.HashMap;
 
-/**
- * Created by pengl on 2015-11-10.
- */
 public class WordNet {
 
     private HashMap<String, Integer> words;

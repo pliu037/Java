@@ -3,9 +3,6 @@ import edu.princeton.cs.algs4.MinPQ;
 import java.util.Comparator;
 import java.util.HashSet;
 
-/**
- * Created by pengl on 12/24/2015.
- */
 public class Solver {
 
     private MinPQ<BoardNode> minHeap;

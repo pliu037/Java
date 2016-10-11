@@ -1,12 +1,8 @@
 import edu.princeton.cs.algs4.Picture;
 
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.lang.Math;
 
-/**
- * Created by pengl on 2015-11-11.
- */
 public class SeamCarver {
 
     private Picture pic;

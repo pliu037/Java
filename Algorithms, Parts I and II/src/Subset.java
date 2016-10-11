@@ -1,8 +1,5 @@
 import edu.princeton.cs.algs4.StdIn;
 
-/**
- * Created by pengl on 2015-11-15.
- */
 public class Subset {
 
     public static void main(String[] args) {

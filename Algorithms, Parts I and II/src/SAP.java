@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-/**
- * Created by pengl on 2015-11-10.
- */
 public class SAP {
 
     private Digraph wordNet;

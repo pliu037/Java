@@ -5,9 +5,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
-/**
- * Created by pengl on 2015-11-18.
- */
 public class FastCollinearPoints {
 
     private Point[] points;

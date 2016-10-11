@@ -6,9 +6,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-/**
- * Created by pengl on 1/21/2016.
- */
 public class KdTree {
 
     private class KdNode<E> {

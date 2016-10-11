@@ -1,9 +1,6 @@
 import edu.princeton.cs.algs4.In;
 import edu.princeton.cs.algs4.StdOut;
 
-/**
- * Created by pengl on 2015-11-11.
- */
 public class Outcast {
 
     private WordNet wordNet;

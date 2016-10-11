@@ -1,8 +1,5 @@
 import java.util.Iterator;
 
-/**
- * Created by pengl on 2015-11-15.
- */
 public class Deque<T> implements Iterable<T> {
 
     private Node<T> head;

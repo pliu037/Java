@@ -1,8 +1,5 @@
 import java.util.Comparator;
 
-/**
- * Created by pengl on 2015-11-18.
- */
 public class Point implements Comparable<Point> {
 
     static class PointComparator implements Comparator<Point> {

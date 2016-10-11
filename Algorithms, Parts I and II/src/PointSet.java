@@ -5,9 +5,6 @@ import java.util.ArrayList;
 import java.util.NavigableSet;
 import java.util.TreeSet;
 
-/**
- * Created by pengl on 1/21/2016.
- */
 public class PointSet {
 
     private TreeSet<Point2D> points;

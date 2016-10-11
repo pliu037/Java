@@ -1,8 +1,5 @@
 import java.util.Comparator;
 
-/**
- * Created by pengl on 12/28/2015.
- */
 public class BoardNode {
 
     public static abstract class Cmp implements Comparator<BoardNode> {

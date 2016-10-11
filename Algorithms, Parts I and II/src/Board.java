@@ -1,8 +1,5 @@
 import java.util.ArrayList;
 
-/**
- * Created by pengl on 12/24/2015.
- */
 public class Board {
 
     private int[] blocks;
