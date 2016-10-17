@@ -30,7 +30,7 @@ public class ThriftySailor {
             }
         }
 
-        return lowest;
+        return lowest == Integer.MAX_VALUE ? -1 : lowest;
     }
 
     public static void main(String[] args) {

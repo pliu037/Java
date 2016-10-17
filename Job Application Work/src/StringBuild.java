@@ -43,6 +43,7 @@ public class StringBuild {
             strInSet = true;
             words.remove(str);
         }
+
         ArrayList<String> sortedWords = new ArrayList<>(words);
         sortedWords.sort((s1, s2) -> {
             if (s1.length() < s2.length()) {
@@ -52,6 +53,7 @@ public class StringBuild {
             }
         });
         recursiveParse(str, sortedWords, stack);
+
         if (stack.get(0) == null) {
             return "invalid target";
         }

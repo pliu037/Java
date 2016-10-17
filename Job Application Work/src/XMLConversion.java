@@ -49,6 +49,7 @@ public class XMLConversion {
                 }
             }
         }
+
         if (!stack.isEmpty()) {
             return "Error";
         }
