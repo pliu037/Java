@@ -18,6 +18,11 @@ public class FloorRequest {
     }
 
     @Override
+    public String toString() {
+        return requestFloor + ":" + targetFloor;
+    }
+
+    @Override
     public int hashCode() {
         return 17*31 + 31*requestFloor + targetFloor;
     }
@@ -26,9 +31,7 @@ public class FloorRequest {
     public boolean equals(Object other) {
         if (other != null && other.getClass() == FloorRequest.class) {
             FloorRequest check = (FloorRequest) other;
-            if (this.requestFloor == check.requestFloor && this.targetFloor == check.targetFloor) {
-                return true;
-            }
+            return this.requestFloor == check.requestFloor && this.targetFloor == check.targetFloor;
         }
         return false;
     }

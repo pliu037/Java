@@ -1,8 +1,57 @@
 *** ELEVATOR CONTROL SYSTEM SIMULATION ***
 
-
 *** DESIGN ***
+The first decision was to use Guice for dependency injection. Dependency injection allows us to easily determine the
+behaviour being injection into certain pieces of the system (e.g.: which concrete scheduler is being used) just by
+looking at the Module file (i.e.: SimpleModule.java). The pattern that makes dependency injection possible forces a
+level of abstraction that opens up customization at a later time. Finally, having never used a dependency injection
+framework, I felt this was as good an opportunity as any to try one out.
 
+The overall design is fairly modularized:
+- Simulation is a wrapper around Elevator Control System that provides a very primitive UI to control the system
+- Elevator Control System manages Elevators and handles events external to the Elevators themselves (e.g.: requests,
+    stepping, and external queries of Elevator state)
+- Elevator contains the internal state of each individual elevator and methods associated with its operation (e.g.:
+    adding requests, moving)
+- FloorRequest contains both the floor from which the request originated as well as the floor the request would like to
+    get to
+- AbstractScheduler is the scheduler the Elevator Control System uses to assign requests to elevators
+- InstantStreamScheduler is an AbstractScheduler that schedules all requests one at a time, in the order they were
+    received (stream), scheduling all requests at every step (instant)
+- AbstractCostFunction is the cost function the scheduler uses to determine the cost of configuration so that it can
+    determine a "best" configuration
+- SimpleCostFunction is a cost function that makes use of various heuristics to calculate a cost associated with
+    matching a given request with a given elevator (only makes use of the requesting floor and whether the request is
+    going up or down in its calculation)
+
+*** BUILD INSTRUCTIONS ***
+The easiest way is to load the project in IntelliJ and run/build it.
+
+Simulation can take command line arguments or not. In the case of not, the Elevator Control System defaults to floors 1
+through 20 on 4 elevators. In the case of using command line arguments, it will only accept three, space-separated
+integers that represent the # of elevators, the lowest floor #, and the highest floor #, respectively.
 
 *** NEXT STEPS ***
+Many of the extensions to the system originate from the flexibility afforded by FloorRequest. As it tracks both the
+requesting floor and target floor, it can be used to represent when the system cannot differentiate whether a request
+wishes to go up or down (the cost function would only use the requesting floor in its calculations; happens if there is
+only 1 request button per floor), when the system can differentiate whether a request wishes to go or down but not where
+to (the cost function would use the requesting floor and whether the target floor is higher or lower; happens if there
+are two request buttons per floor), and when the system not only knows the requesting floor, but also the target floor
+(happens if each floor has a number pad where the request is entering the target floor).
 
+Along with the varying amounts of information the system has available for calculating the cost function, there are
+different ways the scheduler can work as well. Instead of assigning requests to elevators one at a time, the scheduler
+can perform a bulk calculation to determine assignments.
+
+The system can be made even more advanced by having Elevator keep track of the number of people getting off at any
+particular floor and this information can also be taken into account in the cost function (i.e.: calculate the cost to
+those already on the elevator of having to stop at another floor to pick somebody up). One of the ways to keep track of
+how many people are getting off at each floor is to have Elevator maintain a list of FloorRequests. If we further
+separate FloorRequests into the set that have already picked up their passengers and those that have yet to do so, it
+also opens up the possibility of the scheduler reassigning these unserviced FloorRequests in subsequent steps to further
+optimize scheduling.
+
+To play devil's advocate, however, many of the above-discussed optimizations would probably add a massive amount of
+complexity for minimal benefit and so shouldn't be pursued in a real-world situation (but they're still cool to think
+about).

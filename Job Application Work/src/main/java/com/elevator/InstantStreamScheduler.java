@@ -4,10 +4,10 @@ import com.google.inject.Inject;
 
 import java.util.Set;
 
-class StreamScheduler extends AbstractScheduler {
+public class InstantStreamScheduler extends AbstractScheduler {
 
     @Inject
-    public StreamScheduler(AbstractCostFunction ocf) {
+    public InstantStreamScheduler(AbstractCostFunction ocf) {
         super(ocf);
     }
 
@@ -26,5 +26,6 @@ class StreamScheduler extends AbstractScheduler {
             minElevator.addFloorToQueue(request.requestFloor());
             minElevator.addFloorToQueue(request.targetFloor());
         }
+        requests.clear();
     }
 }

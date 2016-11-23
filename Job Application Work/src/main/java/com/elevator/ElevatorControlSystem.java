@@ -1,31 +1,16 @@
 package com.elevator;
 
-import com.google.inject.BindingAnnotation;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
+import java.util.HashMap;
 import java.util.Set;
-
-import static java.lang.annotation.ElementType.METHOD;
-import static java.lang.annotation.ElementType.PARAMETER;
-import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 public class ElevatorControlSystem {
 
-    @BindingAnnotation
-    @Target({ PARAMETER, METHOD })
-    @Retention(RUNTIME)
-    public @interface ElevatorsSet {}
-
-    @BindingAnnotation
-    @Target({ PARAMETER, METHOD })
-    @Retention(RUNTIME)
-    public @interface RequestsSet {}
-
-    private Set<Elevator> elevators;
+    private int round = 1;
+    private HashMap<Integer, Elevator> elevators;
     private Set<FloorRequest> requests;
     private int minFloor = 1;
     private int maxFloor = 20;
@@ -33,14 +18,10 @@ public class ElevatorControlSystem {
     private boolean started;
 
     @Inject
-    public ElevatorControlSystem(AbstractScheduler as, @ElevatorsSet Set<Elevator> elevators,
-                                 @RequestsSet Set<FloorRequest> requests) {
+    public ElevatorControlSystem(AbstractScheduler as, Set<FloorRequest> requests) {
         scheduler = as;
-        this.elevators = elevators;
         this.requests = requests;
-        for (int i = 0; i < 10; i ++) {
-            elevators.add(new Elevator(minFloor, maxFloor));
-        }
+        getElevators(4);
     }
 
     public void setProperties(int numElevators, int minFloor, int maxFloor) {
@@ -51,9 +32,7 @@ public class ElevatorControlSystem {
         if (!started) {
             this.minFloor = minFloor;
             this.maxFloor = maxFloor;
-            for (int i = 0; i < numElevators; i ++) {
-                elevators.add(new Elevator(minFloor, maxFloor));
-            }
+            getElevators(numElevators);
         } else {
             System.out.println("Properties are set once simulation has started.");
         }
@@ -69,22 +48,38 @@ public class ElevatorControlSystem {
     }
 
     public void simulateNextMove() {
+        System.out.println("Round: " + round ++);
         started = true;
-        scheduler.schedule(elevators, requests);
-        for (Elevator elevator : elevators) {
-            elevator.move();
-        }
-        printStats();
+        scheduler.schedule(elevators.values(), requests);
+        elevators.values().forEach(Elevator::move);
+        printAllStats();
     }
 
-    private void printStats() {
-        for (Elevator elevator : elevators) {
-            System.out.print(elevator.id() + ": on floor " + elevator.floor() + " with the following floors enqueued: ");
-            for (Integer floor : elevator.getQueue()) {
-                System.out.print(floor + " ");
-            }
-            System.out.println();
+    public void printElevatorStats(int id) {
+        if (elevators.containsKey(id)) {
+            System.out.println(elevators.get(id));
+        } else {
+            System.out.println("An elevator with id " + id + " does not exist.");
         }
+    }
+
+    private void getElevators(int numElevators) {
+        elevators = new HashMap<>();
+        for (int i = 0; i < numElevators; i ++) {
+            Elevator elevator = new Elevator(minFloor, maxFloor);
+            elevators.put(elevator.id(), elevator);
+        }
+        printAllIds();
+    }
+
+    private void printAllStats() {
+        elevators.values().forEach(System.out::println);
+    }
+
+    private void printAllIds() {
+        System.out.print("The following elevator IDs exist: ");
+        elevators.keySet().forEach((e) -> System.out.print(e + " "));
+        System.out.println();
     }
 
     private boolean isValidFloor(int floor) {
@@ -95,10 +90,20 @@ public class ElevatorControlSystem {
     }
 
     public static void main(String[] args) {
-        Injector injector = Guice.createInjector(new SimpleSchedulerModule());
+        Injector injector = Guice.createInjector(new SimpleModule());
         ElevatorControlSystem ecs = injector.getInstance(ElevatorControlSystem.class);
         ecs.requestAtFloor(2, 10);
         ecs.requestAtFloor(3, 5);
+        ecs.simulateNextMove();
+        ecs.simulateNextMove();
+        ecs.simulateNextMove();
+        ecs.simulateNextMove();
+        ecs.requestAtFloor(7, 8);
+        ecs.simulateNextMove();
+        ecs.requestAtFloor(4, 1);
+        ecs.simulateNextMove();
+        ecs.simulateNextMove();
+        ecs.simulateNextMove();
         ecs.simulateNextMove();
     }
 }
