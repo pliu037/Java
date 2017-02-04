@@ -229,7 +229,7 @@ public class KdTree {
         Iterable<Point2D> results = test.range(rect);
         System.out.println(results);
         System.out.println(test.nearest(new Point2D(3.5, 3.4)));*/
-        In in = new In("D:\\Work\\Programming\\Java\\Algorithms, Parts I and II\\input1M.txt");
+        In in = new In(".\\Algorithms, Parts I and II\\input1M.txt");
         for (int i = 0; i < 1000000; i ++) {
             double x = in.readDouble();
             double y = in.readDouble();
