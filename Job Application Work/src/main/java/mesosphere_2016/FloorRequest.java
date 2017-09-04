@@ -1,4 +1,4 @@
-package com.elevator;
+package mesosphere_2016;
 
 public class FloorRequest {
 

@@ -1,3 +1,5 @@
+package tower_research_2016;
+
 public class Trie {
 
     Trie[] children = new Trie[256];

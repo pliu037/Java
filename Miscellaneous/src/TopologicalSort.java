@@ -47,10 +47,10 @@ public class TopologicalSort {
         }
     }
 
-    public static ArrayList<ArrayList<Integer>> sort(HashSet<Story> stories) {
+    public static ArrayList<ArrayList<Integer>> sort(HashSet<TopologicalSortable> stories) {
         HashMap<Integer, HashSet<Integer>> dependee_map = new HashMap<>();
         HashMap<Integer, HashSet<Integer>> dependency_map = new HashMap<>();
-        for (Story story : stories) {
+        for (TopologicalSortable story : stories) {
             if (!dependee_map.containsKey(story.getID())) {
                 dependee_map.put(story.getID(), new HashSet<>());
             }
@@ -104,7 +104,7 @@ public class TopologicalSort {
     }
 
     public static void main(String[] args) {
-        HashSet<Story> stories = new HashSet<>();
+        HashSet<TopologicalSortable> stories = new HashSet<>();
         stories.add(new Story(new int[]{2, 3}));
         stories.add(new Story(new int[]{4}));
         stories.add(new Story(new int[]{5}));

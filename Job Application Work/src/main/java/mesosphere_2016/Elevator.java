@@ -1,4 +1,4 @@
-package com.elevator;
+package mesosphere_2016;
 
 import com.google.inject.Guice;
 import com.google.inject.Inject;

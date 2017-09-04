@@ -1,3 +1,5 @@
+package tower_research_2016;
+
 public class DecodingPassword {
 
     static int getNext(int current, int[] counts) {
