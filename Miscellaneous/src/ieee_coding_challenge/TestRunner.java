@@ -1,16 +1,30 @@
 package ieee_coding_challenge;
 
-import java.util.concurrent.Callable;
+import java.util.function.Consumer;
 
-public class TestRunner<T> {
+class TestRunner<T> {
 
     private final CLoader<T> cLoader;
 
-    public TestRunner(Class<T> tClass, Callable<T> f, String path) {
-        this.cLoader = new CLoader<>(tClass, path);
+    TestRunner(Class<T> tClass, String path, String packagePath) {
+        this.cLoader = new CLoader<>(tClass, path, packagePath);
     }
 
-    public void run() {
+    void runTest(Class c) {
 
+    }
+
+    static <T> Consumer<T> testWrapper(Consumer<T> c) {
+        Consumer<T> newC = t -> {
+
+        };
+        return newC;
+    }
+
+    static <T> Consumer<T> timerWrapper(Consumer<T> c) {
+        Consumer<T> newC = t -> {
+
+        };
+        return newC;
     }
 }

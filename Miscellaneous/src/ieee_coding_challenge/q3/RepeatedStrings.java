@@ -1,4 +1,4 @@
-package ieee_coding_challenge;
+package ieee_coding_challenge.q3;
 
 public abstract class RepeatedStrings {
 
