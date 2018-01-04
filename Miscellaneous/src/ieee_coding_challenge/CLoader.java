@@ -22,10 +22,10 @@ class CLoader<T> {
         }
     }
 
-    static class LoaderException extends Error {
+    static class LoaderError extends Error {
         String className;
 
-        LoaderException(String className, String errMsg) {
+        LoaderError(String className, String errMsg) {
             super(errMsg);
             this.className = className;
         }
@@ -79,24 +79,25 @@ class CLoader<T> {
                 }
 
                 return c;
-            } catch (LoaderException e) {
+            } catch (LoaderError e) {
                 return c;
             }
         }
     }
 
     private LoaderOutput<T> getClassFromFile(File file) {
-        String className = packagePath + "." + file.getName().split("\\.")[0];
+        String fileName = file.getName().split("\\.")[0];
+        String className = packagePath + "." + fileName;
         Class c;
         try {
             c = new URLClassLoader(new URL[]{file.toURI().toURL()}).loadClass(className);
         } catch (Exception e) {
-            throw new LoaderException(className, "Can't load class " + className + " from " + file.getName() + ": " +
+            throw new LoaderError(className, "Can't load class " + className + " from " + file.getName() + ": " +
                     e.getMessage());
         }
 
         if (!tClass.isAssignableFrom(c)) {
-            throw new LoaderException(className, className + " from " + file.getName() + " is not an instance of " +
+            throw new LoaderError(className, className + " from " + file.getName() + " is not an instance of " +
                     tClass.getName());
         }
 
@@ -105,9 +106,9 @@ class CLoader<T> {
         }
 
         try {
-            return new LoaderOutput<>((T)c.newInstance(), className);
+            return new LoaderOutput<>((T)c.newInstance(), fileName);
         } catch (Exception e) {
-            throw new LoaderException(className, className + " from " + file.getName() + " is missing a constructor: " +
+            throw new LoaderError(className, className + " from " + file.getName() + " is missing a constructor: " +
                     e.getMessage());
         }
     }
@@ -118,7 +119,7 @@ class CLoader<T> {
 
     public static void main(String[] args) {
         CLoader<Fibonacci> cl = new CLoader<>(Fibonacci.class,
-                "D:\\Work\\Programming\\Java\\Miscellaneous\\src\\ieee_coding_challenge\\q1",
+                "C:\\Users\\pengl\\Documents\\Programming\\Java\\Miscellaneous\\src\\ieee_coding_challenge\\q1",
                 "ieee_coding_challenge.q1");
         while (cl.hasNext()) {
             try {

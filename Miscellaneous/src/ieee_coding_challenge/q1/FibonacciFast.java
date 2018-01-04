@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 public class FibonacciFast extends Fibonacci {
 
-    private final ArrayList<Integer> results;
+    private final ArrayList<Long> results;
 
     public FibonacciFast() {
         results = new ArrayList<>();
-        results.add(1);
-        results.add(1);
+        results.add(1L);
+        results.add(1L);
     }
 
     @Override
