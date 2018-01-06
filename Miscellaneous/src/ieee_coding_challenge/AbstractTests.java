@@ -10,14 +10,14 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public abstract class TestRunner<T> {
+public abstract class AbstractTests<T> {
 
     private final CLoader<T> cLoader;
     private final ArrayList<NamedConsumer<T>> tests;
 
     private Stats stats;
 
-    protected TestRunner(Class<T> tClass, String path, String packagePath) {
+    protected AbstractTests(Class<T> tClass, String path, String packagePath) {
         this.cLoader = new CLoader<>(tClass, path, packagePath);
         this.tests = getTests(this.getClass());
     }
