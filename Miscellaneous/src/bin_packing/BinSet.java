@@ -28,7 +28,16 @@ public class BinSet implements Comparable<BinSet> {
     }
 
     public String toString() {
-        return key + ": " + bins.size();
+        StringBuilder sb = new StringBuilder();
+        sb.append(key);
+        sb.append("(");
+        sb.append(bins.size());
+        sb.append("): ");
+        for (Bin b : bins) {
+            sb.append(b.toString().split(":")[1].substring(1));
+            sb.append(" ");
+        }
+        return sb.toString();
     }
 
     @Override

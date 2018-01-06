@@ -2,8 +2,6 @@ package bin_packing;
 
 import java.util.TreeSet;
 
-import static bin_packing.BinPacking.PRECISION;
-
 /*
 A tree-based implementation of BinPool.
 
@@ -34,12 +32,7 @@ public class TreeBinPoolImpl extends BinPool {
         }
 
         Bin b = getBin(size);
-
-        b.remaining -= size;
-        if (Math.abs(b.remaining) < PRECISION) {
-            b.remaining = 0;
-        }
-
+        b.putObject(size);
         putBin(b);
     }
 
@@ -61,13 +54,13 @@ public class TreeBinPoolImpl extends BinPool {
     }
 
     private void putBin(Bin b) {
-        BinSet query = new BinSet(b.remaining);
+        BinSet query = new BinSet(b.getRemaining());
         BinSet bs;
 
         if (binTree.contains(query)) {
             bs = binTree.ceiling(query);
         } else {
-            bs = new BinSet(b.remaining);
+            bs = new BinSet(b.getRemaining());
         }
 
         bs.addBin(b);

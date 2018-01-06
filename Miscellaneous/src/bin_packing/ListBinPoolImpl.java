@@ -1,7 +1,5 @@
 package bin_packing;
 
-import static bin_packing.BinPacking.PRECISION;
-
 /*
 A list-based implementation of BinPool.
 
@@ -37,7 +35,7 @@ public class ListBinPoolImpl extends BinPool {
         }
 
         Node pointer = head;
-        while (pointer != null && pointer.bin.remaining - size < -PRECISION) {
+        while (pointer != null && !pointer.bin.fits(size)) {
             pointer = pointer.next;
         }
 
@@ -52,17 +50,14 @@ public class ListBinPoolImpl extends BinPool {
             b = pointer.bin;
         }
 
-        b.remaining -= size;
-        if (Math.abs(b.remaining) < PRECISION) {
-            b.remaining = 0;
-        }
+        b.putObject(size);
     }
 
     @Override
     public void printBins() {
         Node pointer = head;
         while (pointer != null) {
-            System.out.println(pointer.bin.remaining);
+            System.out.println(pointer.bin);
             pointer = pointer.next;
         }
     }
