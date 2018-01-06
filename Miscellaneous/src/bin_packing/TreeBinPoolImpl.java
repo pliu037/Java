@@ -18,7 +18,7 @@ Finding a Bin that has enough space to fit the object and inserting a new Bin in
 this implementation both take O(log n) time (where n is the number of Bins).
 Therefore, adding an object takes O(log n) time.
  */
-public class TreeBinPoolImpl extends BinPool {
+public class TreeBinPoolImpl extends AbstractBinPool {
     private TreeSet<BinSet> binTree = new TreeSet<>();
 
     public TreeBinPoolImpl(double binCapacity) {

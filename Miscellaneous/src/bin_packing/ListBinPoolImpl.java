@@ -12,7 +12,7 @@ Finding a Bin that has enough space to fit the object takes O(n) time in this
 implementation whereas inserting a new Bin in takes O(1) time (where n is the
 number of Bins). Therefore, adding an object takes O(n) time.
  */
-public class ListBinPoolImpl extends BinPool {
+public class ListBinPoolImpl extends AbstractBinPool {
     private static class Node {
         private Node next = null;
         private Bin bin;

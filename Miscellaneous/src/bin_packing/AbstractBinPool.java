@@ -4,12 +4,12 @@ package bin_packing;
 The abstract class responsible for managing Bins (e.g.: adding new objects into
 the pool of Bins)
  */
-public abstract class BinPool {
+public abstract class AbstractBinPool {
 
     protected final double binCapacity;
     protected int numBins = 0;
 
-    protected BinPool(double binCapacity) {
+    protected AbstractBinPool(double binCapacity) {
         this.binCapacity = binCapacity;
     }
 
