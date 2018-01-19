@@ -3,6 +3,7 @@ package ieee_coding_challenge;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -54,15 +55,29 @@ public abstract class AbstractTests<T> {
     private NamedConsumer<T> testWrapper(NamedConsumer<T> nc) {
         NamedConsumer<T> newNC = new NamedConsumer<>(nc.methodName, t -> {
             final ExecutorService executor = Executors.newSingleThreadExecutor();
-            final Future future = executor.submit(new Thread(() -> nc.c.accept(t)));
+            final Future future = executor.submit(new Thread(() -> {
+                while(!Thread.interrupted()) {
+                    try {
+                        Thread.sleep(10);
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                }
+            }));
+            Thread thr = new Thread(() -> {
+                nc.c.accept(t);
+                future.cancel(true);
+            });
             executor.shutdown();
+            thr.start();
             try {
                 future.get(10, TimeUnit.SECONDS);
-            } catch (InterruptedException | ExecutionException e) {
+            } catch (CancellationException | InterruptedException | ExecutionException e) {
 
             } catch (TimeoutException e) {
-                stats.putErr(nc.methodName, "Timed out");
+                thr.stop();
                 future.cancel(true);
+                stats.putErr(nc.methodName, "Timed out");
             }
         });
         return newNC;

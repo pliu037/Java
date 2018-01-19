@@ -32,10 +32,9 @@ public class BinPacking {
             } catch (Error e) {
                 System.out.println(e.getMessage());
             }
-            // bins.printBins();
-            // System.out.println("-----");
         }
 
+        bins.printBins();
         System.out.println("Total weight packed: " + totalWeight + " Number of bins: " + bins.getNumBins());
         System.out.println("Time taken (ms): " + (System.nanoTime() - start)/1000000);
     }
@@ -57,11 +56,12 @@ public class BinPacking {
 
     public static void main(String[] args) {
         // Change the instantiated BinPool class here
-        BinPacking bp = new BinPacking(new ListBinPoolImpl(1));
+        BinPacking bp = new BinPacking(new TreeBinPoolImpl(1));
 
         // Modify the order of object sizes to be packed here
         // bp.pack(new double[]{0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.6, 1, 1.0001, 0.5, 0.3, 0.2});
 
-        bp.pack(getRandomDoubles(100000));
+        // Modify the size of the array of random doubles here
+        bp.pack(getRandomDoubles(10000));
     }
 }

@@ -16,11 +16,12 @@ import java.util.Set;
  * Optimizations:
  * - instead of a flag to indicate a "word node" within the trie, we can store the actual word that is completed at that
  *   node, simplifying the DFS implementation as we no longer need to keep track of a path's prefix or backtrack to the
- *   once a "word node" is found
+ *   root once a "word node" is found
  * - since we don't care about how many times a given word occurs, we can prune the trie upon finding a word, thereby
  *   further constraining subsequent paths (would not have had time to implement this)
  * - can preprocess valid words so that valid words that are substrings, both in the forward and reverse direction, of
- *   other valid words are merged into their longest such valid words
+ *   other valid words are merged into their longest such valid words (THIS IS INCORRECT AS <.*><TARGET STRING> !=
+ *   <SPECIFIC PREFIX><TARGET STRING>)
  */
 
 public class MemSQL_2017_Fail {
