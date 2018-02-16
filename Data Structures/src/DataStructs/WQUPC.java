@@ -120,5 +120,4 @@ public final class WQUPC {
 		test.find(7);
 		System.out.println(test.getRaw());
 	}
-
 }

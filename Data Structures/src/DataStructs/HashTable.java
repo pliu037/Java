@@ -248,5 +248,4 @@ public final class HashTable <S,T> {
 		ht.remove(3);
 		System.out.println(ht.getNumBins() + " " + ht.getSize() + " " + ht.get(3));
 	}
-
 }

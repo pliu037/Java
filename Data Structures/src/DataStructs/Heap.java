@@ -288,10 +288,9 @@ public final class Heap <E extends Comparable<E>> {
 		test.add(3);
 		test.add(3);
 		test.add(3);
-        System.out.println(test.getPositions(3));
+		System.out.println(test.getPositions(3));
 		test.removeAll(3);
 		System.out.println(test.getPositions(3));
 		System.out.println(test.getSize() + " " + test.getHeap());
-
 	}
 }

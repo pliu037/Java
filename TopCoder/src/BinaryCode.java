@@ -64,7 +64,6 @@ public class BinaryCode {
     }
 
     public static void main (String[] args) {
-        System.out.println(args[0]);
         BinaryCode bc = new BinaryCode();
         String[] results = bc.decode("123210120");
         for (int i = 0; i < results.length; i ++) {
